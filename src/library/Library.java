@@ -259,7 +259,6 @@ public class Library {
 		ArrayList<Book> checkInBooks=new ArrayList<Book>();
 
 		Book checkInBook;
-
 		for(int i=0; i<bookNumbers.length;i++){
 			if(checkedBooks.keySet().contains(bookNumbers[i])){
 				checkInBook = checkedBooks.get(bookNumbers[i]);
@@ -313,10 +312,14 @@ public class Library {
 		for(int i=0; i<bookNumbers.length;i++){
 			if (bookNumbers[i]<= searchBook.size()) {
 				checkOutBook = searchBook.get(bookNumbers[i]-1);
-				checkOutBooks.add(checkOutBook);
-				checkOutBook.checkOut(calendar.getDate()+7);
-				servePatron.take(checkOutBook);
-				collection.remove(checkOutBook);
+				//only three books could be checked out per person
+				if(servePatron.getBooks().size()<3){
+					checkOutBooks.add(checkOutBook);
+					checkOutBook.checkOut(calendar.getDate()+7);
+					servePatron.take(checkOutBook);
+					collection.remove(checkOutBook);
+				}
+
 			}
 		}
 

@@ -13,6 +13,7 @@ public class OverdueNotice {
 		// TODO Auto-generated constructor stub
 		this.patron=patron;
 		this.todaysDate=todaysDate;
+		this.overdue = false;
 
 	}
 	
@@ -36,36 +37,27 @@ public class OverdueNotice {
 		//how to get Book. duedate?
 
 		String overdueMessage="";
-		String overdueBook="";
+		String bookInfo="";
 		ArrayList<Book> Book =patron.getBooks();
 		
 		//if book is null?
-
+		overdueMessage += patron.getName()+"\n";
 		for (Book book: Book){
-			//System.out.print(this.todaysDate);
-			//System.out.print(book.getDueDate());
+
+			bookInfo+="Title: "+book.getTitle()+"\n";
+			bookInfo+="Author: "+book.getAuthor();
 			if (this.todaysDate>book.getDueDate()){
 				//David[Title: A Bend in the River\nAuthor: V.S. Naipaul]
-
-				overdueBook+="Title: "+book.getTitle()+"\n";
-				overdueBook+="Author: "+book.getAuthor();
-				//overdueMessage+=book.getDueDate();
+				overdue = true;
+				bookInfo+=" Overdue\n";
+			}
+			else{
+				
+				bookInfo+="\n";
 			}
 
 		}
-		if (!overdueBook.isEmpty()){
-			overdue = true;
-			overdueMessage += patron.getName()+" ";
-			overdueMessage+="[";
-			overdueMessage+=overdueBook;
-			overdueMessage+="]";
-		}
-		
-		else{
-			overdue = false;
-			overdueMessage += patron.getName()+" ";
-			overdueMessage+="There is no overdue book.";
-		}
+		overdueMessage+=bookInfo;
 		//.getDueDate
 		return overdueMessage;
 		//return patron.getName()+patron.getBooks();
