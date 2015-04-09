@@ -82,6 +82,7 @@ public class Library {
 			command = askUserInput();
 
 			if (command == 8) {
+				println("Oops, Bankrupted!!");
 				quit();
 			}
 
@@ -107,7 +108,6 @@ public class Library {
 						if (servePatron.getBooks().size() == 0) {
 							println("There is no book to check in!");
 						} else {
-							print(servedPatronDetail());
 							println("Input the book number to checkin");
 							String[] bookNum=stringInput().split(",");
 							int inputNum;
@@ -115,7 +115,6 @@ public class Library {
 								try {
 								inputNum=Integer.parseInt(num);
 								checkIn(inputNum);
-								println("Successfully checkin!");
 							}
 								catch (Exception e) {
 									println("Please enter integer according to the list!");
@@ -125,8 +124,6 @@ public class Library {
 
 							}
 						}
-						
-
 					} else {
 						println("Please set who you want to serve!");
 					}
@@ -150,17 +147,15 @@ public class Library {
 						}
 							catch (Exception e) {
 								println("Please enter integer according to the list!");
-								print(searchedResult());
 							}
 						}
-						print(servedPatronDetail());
 					} else {
 						println("please serve and search before checkout");
 					}
 					break;
 				case 7:
 					close();
-					println("Successfully close!");
+					println("Closed! Good night!");
 					break;
 				default:
 					break;
@@ -252,7 +247,6 @@ public class Library {
 				print(manual);
 			}
 		}
-
 		return command;
 	}
 
@@ -361,10 +355,18 @@ public class Library {
 		for(int i=0; i<bookNumbers.length;i++){
 			if(checkedBooks.keySet().contains(bookNumbers[i])){
 				checkInBook = checkedBooks.get(bookNumbers[i]);
-				checkInBook.checkIn();
-				checkInBooks.add(checkInBook);
-				servePatron.giveBack(checkInBook);
-				collection.add(checkInBook);
+				if (servePatron.getBooks().contains(checkInBook)) {
+					checkInBook.checkIn();
+					checkInBooks.add(checkInBook);
+					servePatron.giveBack(checkInBook);
+					collection.add(checkInBook);
+					println(checkInBook.getTitle() + " is successfully checked in!");
+				} else {
+					println(checkInBook.getTitle() +" was already checked in");
+				}
+
+			} else {
+				println("The number you input is not in the list, please serve to see the list!");
 			}
 		}
 		return checkInBooks;
