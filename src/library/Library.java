@@ -17,7 +17,7 @@ public class Library {
 	ArrayList<Book> serveBook;
 	//return search result for user input
 	ArrayList<Book> searchBook;
-	HashMap <Book,Integer> bookVolume;
+	//HashMap <Book,Integer> bookVolume;
 	Patron servePatron;
 	boolean endDay=false;
 	boolean endProgram=false;
@@ -29,34 +29,6 @@ public class Library {
 		this.okToPrint=true;
 		ArrayList<Book> collection=collection();
 		//create book volume relation
-		int volume=0;
-		bookVolume=new HashMap <Book,Integer> ();
-		for (Book eachBook: collection){
-			//System.out.println(eachBook.toString());
-			/*
-			 * if(bookVolume.containsKey(eachBook.getTitle())){
-				//different author with same book name?
-				volume=bookVolume.get(eachBook.getTitle());
-				two objects are different!!
-				how to get the key with same name?
-			 */
-			if(bookVolume.containsKey(eachBook)){
-				volume=bookVolume.get(eachBook);
-				bookVolume.put(eachBook, volume++);
-
-			}
-			else{
-				bookVolume.put(eachBook, 1);
-				//System.out.println("add");
-
-			}
-			/*
-			System.out.println(bookVolume.get(eachBook));
-			System.out.println(bookVolume.get(new Book("A Bend in the River","V.S. Naipaul")));
-			System.out.println(bookVolume.get(collection.get(0)));
-			 */
-		}
-
 
 	}
 	public Library(ArrayList<Book> collection){
@@ -67,18 +39,7 @@ public class Library {
 		this.collection=new ArrayList<Book>();
 		this.collection.addAll(collection);
 		//create book volume relation
-		int volume=0;
-		bookVolume=new HashMap <Book,Integer> ();
-		for (Book eachBook: this.collection){
-			if(bookVolume.containsKey(eachBook)){
-				volume=bookVolume.get(eachBook);
-				bookVolume.put(eachBook, volume++);
-				//System.out.println("add");
-			}
-			else{
-				bookVolume.put(eachBook, 1);
-			}
-		}
+
 	}
 
 
@@ -87,8 +48,9 @@ public class Library {
 		//ArrayList<Book> collection=libray.collection();
 		ArrayList<Book> collection=library.collection();
 		System.out.println(collection.toString());
-		System.out.println(library.bookVolume.get(new Book("Zuleika Dobson", "Max Beerbohm")));
-		System.out.println(library.bookVolume.get(collection.get(1)));
+		//System.out.println(library.bookVolume.get(new Book("Zuleika Dobson", "Max Beerbohm")));
+		
+		//System.out.println(library.bookVolume.get(collection.get(1)));
 		library.start();
 	}
 

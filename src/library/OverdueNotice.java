@@ -10,6 +10,7 @@ public class OverdueNotice {
 		// TODO Auto-generated constructor stub
 		this.patron=patron;
 		this.todaysDate=todaysDate;
+
 	}
 	/**
 	 * Returns as a String, in a nice, humanly readable format, an overdue notice. The
@@ -19,13 +20,32 @@ public class OverdueNotice {
 	public String toString(){
 		//need more construction
 		//how to get Book. duedate?
+		
 		String overdueMessage="";
+		String overdueBook="";
 		ArrayList<Book> Book =patron.getBooks();
+		overdueMessage+=patron.getName()+" ";
+		//if book is null?
+		
 		for (Book book: Book){
-			book.getDueDate();
-			overdueMessage+=book.getTitle();
-			overdueMessage+=book.getDueDate();
+			//System.out.print(this.todaysDate);
+			//System.out.print(book.getDueDate());
+			if (this.todaysDate>book.getDueDate()){
+			//David[Title: A Bend in the River\nAuthor: V.S. Naipaul]
 			
+			overdueBook+="Title: "+book.getTitle()+"\n";
+			overdueBook+="Author: "+book.getAuthor();
+			//overdueMessage+=book.getDueDate();
+			}
+			
+		}
+		if (!overdueBook.isEmpty()){
+		overdueMessage+="[";
+		overdueMessage+=overdueBook;
+		overdueMessage+="]";
+		}
+		else{
+			overdueMessage+="There is no overdue book.";
 		}
 		//.getDueDate
 		return overdueMessage;
