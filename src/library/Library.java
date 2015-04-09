@@ -91,8 +91,8 @@ public class Library {
 					System.out.println("Warning: Bank already opened, please close first!\n");
 					break;
 				case 2:
-//					String issueName = askUserInput();
-//					issueCard(nameOfPatron);
+					String issueName = patronNameInput();
+					issueCard(issueName);
 					break;
 				case 3:
 					break;
@@ -109,9 +109,6 @@ public class Library {
 					break;
 				case 7:
 					break;
-				case 8:
-					break;
-
 				default:
 					break;
 				}
