@@ -19,7 +19,7 @@ public class Library {
 	Patron servePatron;
 	HashMap<Integer, Book> checkedBooks;
 	ArrayList<Book> searchBook;
-	boolean isServe = false;
+
 
 
 	public Library() {
@@ -88,20 +88,19 @@ public class Library {
 			if (isOpen) {
 				switch (command) {
 				case 1:
-					System.out.println("Warning: Bank already opened, please close first!\n");
+					println("Warning: Bank already opened, please close first!");
 					break;
 				case 2:
+					println("Input the name of the customer");
 					String issueName = patronNameInput();
 					issueCard(issueName);
 					break;
 				case 3:
+					println("Input the name of the customer");
+					String serveName = patronNameInput();
+					serve(serveName);
 					break;
 				case 4:
-					if (isServe) {
-
-					} else {
-						System.out.println("Please select the customer you served!");
-					}
 					break;
 				case 5:
 					break;
@@ -114,12 +113,19 @@ public class Library {
 				}
 			} else if (command == 1) {
 				open();
+				println("Bank is open, enjoy your day!");
 			} else {
-				System.out.println("Please open the bank first");
+				println("Please open the bank first");
 			}
 		}
 	}
 
+//	/**
+//	 * 
+//	 */
+//	String patronDetail() {
+//		
+//	}
 
 	/**
 	 * ask user to input a name
@@ -149,7 +155,7 @@ public class Library {
 		manual+="8. Exit this program!\n";
 
 		while ((command<1)||(command >8)){
-			System.out.println(output);
+			println(output);
 			try {
 				command = Integer.parseInt(in.next());
 
@@ -157,7 +163,7 @@ public class Library {
 				command = 0;
 			}
 			if (command == 0) {
-				System.out.println(manual);
+				print(manual);
 			}
 		}
 
@@ -223,10 +229,12 @@ public class Library {
 		if (patronInfo.containsKey(nameOfPatron))
 		{
 			//print info?
+			println("Warning: Customer already exist!");
 			return patronInfo.get(nameOfPatron);
 		}
 		else{
 			//Patron newUser = new Patron(nameOfPatron, null);
+			println("Congrat! Customer "+nameOfPatron+" is our member now!");
 			Patron newUser = new Patron(nameOfPatron, this);
 			patronInfo.put(nameOfPatron, newUser);
 			return newUser;
@@ -239,8 +247,12 @@ public class Library {
 	 * @return
 	 */
 	Patron serve(String nameOfPatron) {
-		isServe = true;
-		servePatron=patronInfo.get(nameOfPatron);
+		if (patronInfo.containsKey(nameOfPatron)) {
+			servePatron=patronInfo.get(nameOfPatron);
+		} else {
+			println("Warning, Customer not exist");
+			servePatron = null;
+		}
 		int i = 1;
 		checkedBooks = new HashMap<Integer, Book> ();
 		for (Book book:servePatron.getBooks()) {
@@ -330,7 +342,7 @@ public class Library {
 	 * close the library
 	 */
 	void close() {
-		isServe = false;
+		servePatron = null;
 		isOpen = false;
 	}
 
