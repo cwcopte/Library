@@ -21,7 +21,7 @@ public class Library {
 	ArrayList<Book> searchBook;
 	boolean isServe = false;
 
-	
+
 	public Library() {
 		okToPrint = true;
 		collection = new ArrayList<Book>();
@@ -30,7 +30,7 @@ public class Library {
 		calendar = new Calendar();
 		isOpen = false;
 	}
-	
+
 	public Library(ArrayList<Book> collection) {
 		okToPrint = false;
 		this.collection = new ArrayList<Book>();
@@ -39,8 +39,8 @@ public class Library {
 		calendar = new Calendar();
 		isOpen = false;
 	}
-	
-	
+
+
 	/**
 	 * read book collection from txt
 	 * @return
@@ -72,7 +72,7 @@ public class Library {
 		Library library = new Library();
 		library.start();
 	}
-	
+
 	/**
 	 * start the program.
 	 */
@@ -80,20 +80,25 @@ public class Library {
 		int command;
 		while (true) {
 			command = askUserInput();
-			
+
+			if (command == 8) {
+				quit();
+			}
+
 			if (isOpen) {
 				switch (command) {
 				case 1:
 					System.out.println("Warning: Bank already opened, please close first!\n");
 					break;
 				case 2:
-					
+//					String issueName = askUserInput();
+//					issueCard(nameOfPatron);
 					break;
 				case 3:
 					break;
 				case 4:
 					if (isServe) {
-						
+
 					} else {
 						System.out.println("Please select the customer you served!");
 					}
@@ -112,8 +117,6 @@ public class Library {
 				}
 			} else if (command == 1) {
 				open();
-			} else if (command == 8) {
-				quit();
 			} else {
 				System.out.println("Please open the bank first");
 			}
@@ -122,14 +125,22 @@ public class Library {
 
 
 	/**
+	 * ask user to input a name
+	 */
+	String patronNameInput(){
+		Scanner in = new Scanner(System.in);
+		return in.nextLine();
+	}
+
+	/**
 	 * ask user for the command
 	 */
 	int askUserInput() {
 		Scanner in = new Scanner(System.in);
 		int command = 0;
-		
+
 		String output = "Please command, input 0 to get help";
-		
+
 		String manual = "Please input a command between 1 and 8\n";
 		manual+="1. Open the library!\n";
 		manual+="2. Issue a library card!\n";
@@ -139,12 +150,12 @@ public class Library {
 		manual+="6. Check out books!\n";
 		manual+="7. Close the library!\n";
 		manual+="8. Exit this program!\n";
-		
+
 		while ((command<1)||(command >8)){
 			System.out.println(output);
 			try {
 				command = Integer.parseInt(in.next());
-				
+
 			} catch (Exception e) {
 				command = 0;
 			}
@@ -152,10 +163,10 @@ public class Library {
 				System.out.println(manual);
 			}
 		}
-		
+
 		return command;
 	}
-	
+
 	/**
 	 * Print message if okToPrint is true
 	 * @param message
@@ -165,7 +176,7 @@ public class Library {
 			System.out.print(message);
 		}
 	}
-	
+
 	/**
 	 * Print message if okToPrint is true
 	 * @param message
@@ -175,22 +186,22 @@ public class Library {
 			System.out.println(message);
 		}
 	}
-	
+
 	/**
 	 * Start the day and sends overdue notice
 	 * @return
 	 */
 	ArrayList<OverdueNotice> open() {
-//		if (isOpen) {
-//			System.out.println("Already opened, please close first!");
-//			return new ArrayList<OverdueNotice>();
-//		}
+		//		if (isOpen) {
+		//			System.out.println("Already opened, please close first!");
+		//			return new ArrayList<OverdueNotice>();
+		//		}
 		calendar.advance();
 		isOpen = true;
 		return createOverdueNotice();
 	}
-	
-	
+
+
 	/**
 	 * create a list of overdue notice
 	 * @return
@@ -204,7 +215,7 @@ public class Library {
 		}
 		return dueNotice;
 	}
-	
+
 	/**
 	 * Issue library card to a patron
 	 * @param nameOfPatron
@@ -224,7 +235,7 @@ public class Library {
 			return newUser;
 		}
 	}
-	
+
 	/**
 	 * set the person now serving
 	 * @param nameOfPatron
@@ -241,7 +252,7 @@ public class Library {
 		}		
 		return servePatron;
 	}
-	
+
 	/**
 	 * check in books
 	 * @param bookNumbers
@@ -249,9 +260,9 @@ public class Library {
 	 */
 	ArrayList<Book> checkIn(int... bookNumbers) {
 		ArrayList<Book> checkInBooks=new ArrayList<Book>();
-		
+
 		Book checkInBook;
-		
+
 		for(int i=0; i<bookNumbers.length;i++){
 			if(checkedBooks.keySet().contains(bookNumbers[i])){
 				checkInBook = checkedBooks.get(bookNumbers[i]);
@@ -263,7 +274,7 @@ public class Library {
 		}
 		return checkInBooks;
 	}
-	
+
 	/**
 	 * search books
 	 * @param part
@@ -272,7 +283,7 @@ public class Library {
 	ArrayList<Book> search(String part) {
 		searchBook = new ArrayList<>();
 		String partLowercase=part.toLowerCase(); 
-		
+
 		if (partLowercase.length()>3){
 			for(Book bookinfo:collection){
 				boolean haveBook = false;
@@ -286,13 +297,13 @@ public class Library {
 					if (!haveBook) {
 						searchBook.add(bookinfo);
 					}
-					
+
 				}
 			}
 		}
 		return searchBook;
 	}
-	
+
 	/**
 	 * checkout books
 	 * @param bookNumbers
@@ -301,7 +312,7 @@ public class Library {
 	ArrayList<Book> checkOut(int... bookNumbers) {
 		ArrayList<Book> checkOutBooks=new ArrayList<Book>();
 		Book checkOutBook;
-		
+
 		for(int i=0; i<bookNumbers.length;i++){
 			if (bookNumbers[i]<= searchBook.size()) {
 				checkOutBook = searchBook.get(bookNumbers[i]-1);
@@ -311,10 +322,10 @@ public class Library {
 				collection.remove(checkOutBook);
 			}
 		}
-		
+
 		return checkOutBooks;
 	}
-	
+
 	/**
 	 * close the library
 	 */
@@ -322,8 +333,8 @@ public class Library {
 		isServe = false;
 		isOpen = false;
 	}
-	
-	
+
+
 	/**
 	 * shut done
 	 */
