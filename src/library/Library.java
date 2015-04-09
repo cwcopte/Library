@@ -104,29 +104,38 @@ public class Library {
 				case 3: //serve
 					println("Input the name of the customer");
 					serve(stringInput());
-					//servePatron.take(contact);
 					print(servedPatronDetail());
 					break;
 
 				case 4:
 					//use , to seperate
 					//check in 
-					print(servedPatronDetail());
-					println("Input the book number to checkin");
-					String[] bookNum=stringInput().split(",");
-					int inputNum;
-					for(String num: bookNum){
-						try {
-						inputNum=Integer.parseInt(num);
-						checkIn(inputNum);
-						println("Successfully checkin!");
-					}
-						catch (Exception e) {
-							println("Please enter integer according to the list!");
-							//print search result
+					if (servePatron!=null) {
+						if (servePatron.getBooks().size() == 0) {
+							println("There is no book to check in!");
+						} else {
 							print(servedPatronDetail());
-						}
+							println("Input the book number to checkin");
+							String[] bookNum=stringInput().split(",");
+							int inputNum;
+							for(String num: bookNum){
+								try {
+								inputNum=Integer.parseInt(num);
+								checkIn(inputNum);
+								println("Successfully checkin!");
+							}
+								catch (Exception e) {
+									println("Please enter integer according to the list!");
+									//print search result
+									print(servedPatronDetail());
+								}
 
+							}
+						}
+						
+
+					} else {
+						println("Please set who you want to serve!");
 					}
 
 					break;
@@ -136,27 +145,26 @@ public class Library {
 					print(searchedResult());
 					break;
 				case 6: //check out
-					
-					print(searchedResult());
-					println("Input the book number to checkout");
-					String[] bookNum1=stringInput().split(",");
-					int inputNum1;
-					for(String num: bookNum1){
-						try {
-						inputNum1=Integer.parseInt(num);
-						checkOut(inputNum1);
-						println("Successfully checkout!");
-					}
-						catch (Exception e) {
-							println("Please enter integer according to the list!");
-							
-							print(searchedResult());
+					if (servePatron != null && !searchBook.isEmpty()) {
+						print(searchedResult());
+						println("Input the book number to checkout");
+						String[] bookNum1=stringInput().split(",");
+						int inputNum1;
+						for(String num: bookNum1){
+							try {
+							inputNum1=Integer.parseInt(num);
+							checkOut(inputNum1);
+							println("Successfully checkout!");
 						}
+							catch (Exception e) {
+								println("Please enter integer according to the list!");
+								
+								print(searchedResult());
+							}
+						}
+					} else {
+						println("please serve and search before checkout");
 					}
-					
-					
-					//checkOut(1,2);
-					//print(servedPatronDetail());
 					break;
 				case 7:
 					close();
@@ -195,16 +203,10 @@ public class Library {
 		if (servePatron == null) {
 			return "";
 		}
+		
 		String detailsToPrint="Name: ";
-		detailsToPrint += servePatron.toString()+"\n";
-		detailsToPrint += "Number of Checked out books: "+servePatron.getBooks().size()+"\n";
-		for (int number=0;number <servePatron.getBooks().size();number++) {
-			detailsToPrint += ("["+(number+1)+"]")+
-					" Title: "+servePatron.getBooks().get(number).getTitle()+
-					" Author: "+servePatron.getBooks().get(number).getAuthor()+
-					" Due Date "+servePatron.getBooks().get(number).getDueDate()+"\n";
-		}
-		/*
+		detailsToPrint += servePatron.getName() + "\n";
+		
 		detailsToPrint += "Number of Checked out books: "+checkedBooks.keySet().size()+"\n";
 		for (int number: checkedBooks.keySet()) {
 			detailsToPrint += Integer.toString(number)+
@@ -212,7 +214,7 @@ public class Library {
 					", Author: "+checkedBooks.get(number).getAuthor()+
 					", Due Date: "+checkedBooks.get(number).getDueDate()+"\n";
 		}
-		*/
+		
 		return detailsToPrint;
 	}
 
@@ -424,7 +426,8 @@ public class Library {
 					servePatron.take(checkOutBook);
 					collection.remove(checkOutBook);
 				}
-
+			} else {
+				println("number "+bookNumbers[i]+" is not valid");
 			}
 		}
 
