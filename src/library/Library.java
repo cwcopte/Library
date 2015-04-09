@@ -20,10 +20,7 @@ public class Library {
 	HashMap<Integer, Book> checkedBooks;
 	ArrayList<Book> searchBook;
 
-//testing variable
-    private Book contact;
-    private Book equalRites;
-    private Book sisters;
+
 
 	public Library() {
 		okToPrint = true;
@@ -32,10 +29,6 @@ public class Library {
 		patronInfo = new HashMap<String, Patron> ();
 		calendar = new Calendar();
 		isOpen = false;
-		//testing variables
-		contact = new Book("Contact", "Carl Sagan");
-	    equalRites = new Book("Equal Rites", "Terry Pratchett");
-	    sisters = new Book("Weird Sisters", "Terry Pratchett");
 	}
 
 	public Library(ArrayList<Book> collection) {
