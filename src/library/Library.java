@@ -167,6 +167,7 @@ public class Library {
 					break;
 				case 7:
 					close();
+					println("Successfully close!");
 					break;
 				default:
 					break;
