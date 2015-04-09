@@ -92,17 +92,19 @@ public class Library {
 					break;
 				case 2:
 					println("Input the name of the customer");
-					String issueName = patronNameInput();
-					issueCard(issueName);
+					issueCard(stringInput());
 					break;
 				case 3:
 					println("Input the name of the customer");
-					String serveName = patronNameInput();
-					serve(serveName);
+					serve(stringInput());
+					print(servedPatronDetail());
 					break;
 				case 4:
+					
 					break;
 				case 5:
+					println("Input the book name or author to search");
+					search(stringInput());
 					break;
 				case 6:
 					break;
@@ -120,17 +122,29 @@ public class Library {
 		}
 	}
 
-//	/**
-//	 * 
-//	 */
-//	String patronDetail() {
-//		
-//	}
+	/**
+	 * 
+	 */
+	String servedPatronDetail() {
+		if (servePatron == null) {
+			return "";
+		}
+		String detailsToPrint="Name: ";
+		detailsToPrint += servePatron.toString()+"\n";
+		detailsToPrint += "Number of Checked out books: "+checkedBooks.keySet().size()+"\n";
+		for (int number: checkedBooks.keySet()) {
+			detailsToPrint += Integer.toString(number)+
+					" Title: "+checkedBooks.get(number).getTitle()+
+					" Author: "+checkedBooks.get(number).getAuthor()+
+					" Due Date "+checkedBooks.get(number).getDueDate()+"\n";
+		}
+		return detailsToPrint;
+	}
 
 	/**
-	 * ask user to input a name
+	 * ask user to input a String Input
 	 */
-	String patronNameInput(){
+	String stringInput(){
 		Scanner in = new Scanner(System.in);
 		return in.nextLine();
 	}
@@ -252,6 +266,7 @@ public class Library {
 		} else {
 			println("Warning, Customer not exist");
 			servePatron = null;
+			return null;
 		}
 		int i = 1;
 		checkedBooks = new HashMap<Integer, Book> ();
