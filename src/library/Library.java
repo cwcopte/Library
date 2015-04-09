@@ -87,28 +87,29 @@ public class Library {
 
 			if (isOpen) {
 				switch (command) {
-				case 1:
+				case 1: //open
 					println("Warning: Bank already opened, please close first!");
 					break;
-				case 2:
+				case 2: //issue card
 					println("Input the name of the customer");
 					issueCard(stringInput());
 					break;
-				case 3:
+				case 3: //serve
 					println("Input the name of the customer");
 					serve(stringInput());
 					print(servedPatronDetail());
 					break;
-				case 4:
+				case 4: 
 					
 					break;
-				case 5:
+				case 5: //search
 					println("Input the book name or author to search");
 					search(stringInput());
 					print(searchedResult());
 					break;
-				case 6:
+				case 6: //check out
 					checkOut(1,2);
+					print(servedPatronDetail());
 					break;
 				case 7:
 					close();
