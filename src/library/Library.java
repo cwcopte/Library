@@ -105,10 +105,13 @@ public class Library {
 				case 5:
 					println("Input the book name or author to search");
 					search(stringInput());
+					print(searchedResult());
 					break;
 				case 6:
+					checkOut(1,2);
 					break;
 				case 7:
+					close();
 					break;
 				default:
 					break;
@@ -123,7 +126,19 @@ public class Library {
 	}
 
 	/**
-	 * 
+	 * print the searched results
+	 * @return
+	 */
+	String searchedResult() {
+		String result = "Result: \n";
+		for (int i=0; i< searchBook.size(); i++){
+			result += Integer.toString(i+1) + ", Title: "+searchBook.get(i).getTitle()+", Author: "+searchBook.get(i).getAuthor() + "\n";
+		}
+		return result;
+	}
+	
+	/**
+	 * Print the detais of the patron like name, checked book and due date
 	 */
 	String servedPatronDetail() {
 		if (servePatron == null) {
@@ -135,8 +150,8 @@ public class Library {
 		for (int number: checkedBooks.keySet()) {
 			detailsToPrint += Integer.toString(number)+
 					" Title: "+checkedBooks.get(number).getTitle()+
-					" Author: "+checkedBooks.get(number).getAuthor()+
-					" Due Date "+checkedBooks.get(number).getDueDate()+"\n";
+					", Author: "+checkedBooks.get(number).getAuthor()+
+					", Due Date: "+checkedBooks.get(number).getDueDate()+"\n";
 		}
 		return detailsToPrint;
 	}
@@ -313,7 +328,7 @@ public class Library {
 				if ((bookinfo.getAuthor().toLowerCase().indexOf(partLowercase)>=0)||
 						(bookinfo.getTitle().toLowerCase().indexOf(partLowercase)>=0)){
 					for (Book book:searchBook) {
-						if ((book.getAuthor() == bookinfo.getAuthor()) && book.getTitle() == bookinfo.getTitle()) {
+						if ((book.getAuthor().equals(bookinfo.getAuthor())) && book.getTitle().equals(bookinfo.getTitle())) {
 							haveBook = true;
 						}
 					}
