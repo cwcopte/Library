@@ -88,6 +88,7 @@ public class LibraryTest {
         for (int i = 0; i < dueDate; i++) {
             library.close();
             notices = library.open();
+            System.out.println(notices.toString());
             assertTrue(notices.isEmpty());
             System.out.println(library.calendar.getDate());
         }
@@ -186,6 +187,7 @@ public class LibraryTest {
         // Checking out a book moves it from the library to the patron
         library.checkOut(1);
         assertTrue(dave.getBooks().contains(nightly));
+        //System.out.println(library.search("Disappearing Nightly").get(0));
         assertTrue(library.search("Disappearing Nightly").isEmpty());
         // Checking in a book moves it back from the patron to the library
         library.serve("Dave");
@@ -247,9 +249,13 @@ public class LibraryTest {
     @Test
     public void testSearchWithMixedCase() {
         library.open();
+        
         ArrayList<Book> foundBooks = library.search("laura");
         assertEquals(1, foundBooks.size());
-        foundBooks = library.search("NIGHTLY");
+       
+        //where is laura??
+        
+        foundBooks  = library.search("NIGHTLY");
         assertEquals(1, foundBooks.size());
         foundBooks = library.search("Nick");
         assertEquals(2, foundBooks.size());
@@ -263,6 +269,9 @@ public class LibraryTest {
     public void testSearchAndIgnoreDuplicates() {
         library.open();
         ArrayList<Book> foundBooks = library.search("Contact");
+        //no text in print
+        //no text in txt
+        //but exist in variable, size=2,  weird "null"
         assertEquals(1, foundBooks.size());
     }
 

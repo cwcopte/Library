@@ -6,6 +6,7 @@ public class OverdueNotice {
 
 	Patron patron;
 	int todaysDate;
+	boolean isOverDue;
 	public OverdueNotice(Patron patron, int todaysDate) {
 		// TODO Auto-generated constructor stub
 		this.patron=patron;
@@ -24,7 +25,7 @@ public class OverdueNotice {
 		String overdueMessage="";
 		String overdueBook="";
 		ArrayList<Book> Book =patron.getBooks();
-		overdueMessage+=patron.getName()+" ";
+		
 		//if book is null?
 		
 		for (Book book: Book){
@@ -40,11 +41,16 @@ public class OverdueNotice {
 			
 		}
 		if (!overdueBook.isEmpty()){
+		overdueMessage+=patron.getName()+" ";
 		overdueMessage+="[";
 		overdueMessage+=overdueBook;
 		overdueMessage+="]";
+		isOverDue=false;
 		}
+		
 		else{
+			isOverDue=true;
+			overdueMessage+=patron.getName()+" ";
 			overdueMessage+="There is no overdue book.";
 		}
 		//.getDueDate
@@ -55,6 +61,9 @@ public class OverdueNotice {
 		//book2 due:
 		//There are ** due items:
 		//book3 overdue:
+	}
+	public boolean isOverDue() {
+		return isOverDue;
 	}
 
 }
