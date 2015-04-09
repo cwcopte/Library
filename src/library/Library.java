@@ -147,21 +147,20 @@ public class Library {
 				case 6: //check out
 					if (servePatron != null && !searchBook.isEmpty()) {
 						print(searchedResult());
-						println("Input the book number to checkout");
+						println("Input the book numbers to checkout, like 1,2");
 						String[] bookNum1=stringInput().split(",");
 						int inputNum1;
 						for(String num: bookNum1){
 							try {
 							inputNum1=Integer.parseInt(num);
 							checkOut(inputNum1);
-							println("Successfully checkout!");
 						}
 							catch (Exception e) {
 								println("Please enter integer according to the list!");
-								
 								print(searchedResult());
 							}
 						}
+						print(servedPatronDetail());
 					} else {
 						println("please serve and search before checkout");
 					}
@@ -207,12 +206,14 @@ public class Library {
 		String detailsToPrint="Name: ";
 		detailsToPrint += servePatron.getName() + "\n";
 		
-		detailsToPrint += "Number of Checked out books: "+checkedBooks.keySet().size()+"\n";
-		for (int number: checkedBooks.keySet()) {
-			detailsToPrint += Integer.toString(number)+
-					" Title: "+checkedBooks.get(number).getTitle()+
-					", Author: "+checkedBooks.get(number).getAuthor()+
-					", Due Date: "+checkedBooks.get(number).getDueDate()+"\n";
+		detailsToPrint += "Number of Checked out books: "+servePatron.getBooks().size()+"\n";
+		int i = 1;
+		for (Book book: servePatron.getBooks()) {
+			detailsToPrint += Integer.toString(i)+
+					" Title: "+book.getTitle()+
+					", Author: "+book.getAuthor()+
+					", Due Date: "+book.getDueDate()+"\n";
+			i++;
 		}
 		
 		return detailsToPrint;
@@ -421,10 +422,18 @@ public class Library {
 				checkOutBook = searchBook.get(bookNumbers[i]-1);
 				//only three books could be checked out per person
 				if(servePatron.getBooks().size()<3){
-					checkOutBooks.add(checkOutBook);
-					checkOutBook.checkOut(calendar.getDate()+7);
-					servePatron.take(checkOutBook);
-					collection.remove(checkOutBook);
+					if (servePatron.getBooks().contains(checkOutBook)) {
+						println("Sorry! "+ checkOutBook.getTitle()+ " was already checked out");
+					} else {
+						checkOutBooks.add(checkOutBook);
+						checkOutBook.checkOut(calendar.getDate()+7);
+						servePatron.take(checkOutBook);
+						collection.remove(checkOutBook);
+						println(checkOutBook.getTitle()+ " is successfully checkout!");
+					}
+
+				} else {
+					println("One customer can only check out 3 books at a time!");
 				}
 			} else {
 				println("number "+bookNumbers[i]+" is not valid");
