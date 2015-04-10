@@ -48,7 +48,6 @@ public class OverdueNotice {
 			bookInfo+="Author: "+book.getAuthor();
 			if (this.todaysDate>book.getDueDate()){
 				//David[Title: A Bend in the River\nAuthor: V.S. Naipaul]
-				overdue = true;
 				bookInfo+=" Overdue\n";
 			}
 			else{
@@ -67,5 +66,19 @@ public class OverdueNotice {
 		//There are ** due items:
 		//book3 overdue:
 	}
+
+	public boolean isOverdue() {
+		
+		for (Book book: patron.getBooks()){
+			if (this.todaysDate>book.getDueDate()){
+				overdue = true;
+				
+			}
+
+		}return overdue;
+		
+	}
+
+
 
 }

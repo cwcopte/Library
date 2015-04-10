@@ -20,10 +20,10 @@ public class Library {
 	HashMap<Integer, Book> checkedBooks;
 	ArrayList<Book> searchBook;
 
-//testing variable
-    private Book contact;
-    private Book equalRites;
-    private Book sisters;
+	//testing variable
+	private Book contact;
+	private Book equalRites;
+	private Book sisters;
 
 	public Library() {
 		okToPrint = true;
@@ -34,8 +34,8 @@ public class Library {
 		isOpen = false;
 		//testing variables
 		contact = new Book("Contact", "Carl Sagan");
-	    equalRites = new Book("Equal Rites", "Terry Pratchett");
-	    sisters = new Book("Weird Sisters", "Terry Pratchett");
+		equalRites = new Book("Equal Rites", "Terry Pratchett");
+		sisters = new Book("Weird Sisters", "Terry Pratchett");
 	}
 
 	public Library(ArrayList<Book> collection) {
@@ -95,7 +95,7 @@ public class Library {
 			if (isOpen) {
 				switch (command) {
 				case 1: //open
-					println("Warning: Bank already opened, please close first!");
+					println("Warning: Lirary already opened, please close first!");
 					break;
 				case 2: //issue card
 					println("Input the name of the customer");
@@ -120,10 +120,10 @@ public class Library {
 							int inputNum;
 							for(String num: bookNum){
 								try {
-								inputNum=Integer.parseInt(num);
-								checkIn(inputNum);
-								println("Successfully checkin!");
-							}
+									inputNum=Integer.parseInt(num);
+									checkIn(inputNum);
+									println("Successfully checkin!");
+								}
 								catch (Exception e) {
 									println("Please enter integer according to the list!");
 									//print search result
@@ -132,7 +132,7 @@ public class Library {
 
 							}
 						}
-						
+
 
 					} else {
 						println("Please set who you want to serve!");
@@ -152,13 +152,17 @@ public class Library {
 						int inputNum1;
 						for(String num: bookNum1){
 							try {
-							inputNum1=Integer.parseInt(num);
-							checkOut(inputNum1);
-							println("Successfully checkout!");
-						}
+								inputNum1=Integer.parseInt(num);
+								ArrayList<Book> books=new ArrayList<Book>();
+								books=checkOut(inputNum1);
+								for(int i=0;i<books.size();i++){
+									println("Successfully checkout: "+books.get(i).getTitle());
+								}
+
+							}
 							catch (Exception e) {
 								println("Please enter integer according to the list!");
-								
+
 								print(searchedResult());
 							}
 						}
@@ -174,10 +178,26 @@ public class Library {
 					break;
 				}
 			} else if (command == 1) {
-				open();
-				println("Library is open, enjoy your day!");
+
+
+				ArrayList<OverdueNotice> overdueNotice=new ArrayList<OverdueNotice>();
+				overdueNotice=open();
+				println("Today is "+calendar.getDate()+". Library is open, enjoy your day!");
+				//overdueNotice.get(0).toString();
+				if(overdueNotice.size()==0){
+					println("no overdue notice.");
+				}
+				else{
+					for(OverdueNotice notice: overdueNotice){
+						println(notice.toString());
+					}
+					println("overdue notice sent to ***");
+				}
+				//return overdue notice
+
+
 			} else {
-				println("Please open the bank first");
+				println("Please open the Library first");
 			}
 		}
 	}
@@ -188,15 +208,15 @@ public class Library {
 	 */
 	String searchedResult() {
 
-			String result = "Result: \n";
-			for (int i=0; i< searchBook.size(); i++){
-				result += Integer.toString(i+1) + ", Title: "+searchBook.get(i).getTitle()+", Author: "+searchBook.get(i).getAuthor() + "\n";
-			
+		String result = "Result: \n";
+		for (int i=0; i< searchBook.size(); i++){
+			result += Integer.toString(i+1) + ", Title: "+searchBook.get(i).getTitle()+", Author: "+searchBook.get(i).getAuthor() + "\n";
+
 		}
 
 		return result;
 	}
-	
+
 	/**
 	 * Print the detais of the patron like name, checked book and due date
 	 */
@@ -204,10 +224,10 @@ public class Library {
 		if (servePatron == null) {
 			return "";
 		}
-		
+
 		String detailsToPrint="Name: ";
 		detailsToPrint += servePatron.getName() + "\n";
-		
+
 		detailsToPrint += "Number of Checked out books: "+checkedBooks.keySet().size()+"\n";
 		for (int number: checkedBooks.keySet()) {
 			detailsToPrint += Integer.toString(number)+
@@ -215,7 +235,7 @@ public class Library {
 					", Author: "+checkedBooks.get(number).getAuthor()+
 					", Due Date: "+checkedBooks.get(number).getDueDate()+"\n";
 		}
-		
+
 		return detailsToPrint;
 	}
 
@@ -292,6 +312,7 @@ public class Library {
 		//			return new ArrayList<OverdueNotice>();
 		//		}
 		calendar.advance();
+		
 		isOpen = true;
 		return createOverdueNotice();
 	}
@@ -304,8 +325,12 @@ public class Library {
 	ArrayList<OverdueNotice> createOverdueNotice () {
 		ArrayList<OverdueNotice> dueNotice = new ArrayList<OverdueNotice> ();
 		for (String name: patronInfo.keySet()) {
+			System.out.print(patronInfo.get(name).getBooks().get(0).getDueDate());
+			System.out.println(patronInfo.get(name));
+			System.out.println(calendar.getDate());
+			//testing
 			OverdueNotice insOverdueNotice = new OverdueNotice(patronInfo.get(name), calendar.getDate());
-			if (insOverdueNotice.overdue())
+			if (insOverdueNotice.isOverdue())
 				dueNotice.add(insOverdueNotice);
 		}
 		return dueNotice;

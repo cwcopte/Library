@@ -90,9 +90,9 @@ public class LibraryTest {
             notices = library.open();
             System.out.println(notices.toString());
             assertTrue(notices.isEmpty());
-            System.out.println(library.calendar.getDate());
+            System.out.println("library.calendar"+library.calendar.getDate());
         }
-        System.out.println(library.calendar.getDate());
+        //System.out.println(library.calendar.getDate());
         library.close();
         for (int i=0;i<library.collection.size();i++){
         System.out.println(library.collection.get(i).dueDate);}
