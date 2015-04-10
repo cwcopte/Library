@@ -20,10 +20,7 @@ public class Library {
 	HashMap<Integer, Book> checkedBooks;
 	ArrayList<Book> searchBook;
 
-	//testing variable
-	private Book contact;
-	private Book equalRites;
-	private Book sisters;
+
 
 	public Library() {
 		okToPrint = true;
@@ -32,10 +29,7 @@ public class Library {
 		patronInfo = new HashMap<String, Patron> ();
 		calendar = new Calendar();
 		isOpen = false;
-		//testing variables
-		contact = new Book("Contact", "Carl Sagan");
-		equalRites = new Book("Equal Rites", "Terry Pratchett");
-		sisters = new Book("Weird Sisters", "Terry Pratchett");
+
 	}
 
 	public Library(ArrayList<Book> collection) {
@@ -89,6 +83,7 @@ public class Library {
 			command = askUserInput();
 
 			if (command == 8) {
+				println("Oops, Bankrupted!!");
 				quit();
 			}
 
@@ -114,16 +109,17 @@ public class Library {
 						if (servePatron.getBooks().size() == 0) {
 							println("There is no book to check in!");
 						} else {
-							print(servedPatronDetail());
 							println("Input the book number to checkin");
 							String[] bookNum=stringInput().split(",");
 							int inputNum;
 							for(String num: bookNum){
 								try {
+
 									inputNum=Integer.parseInt(num);
 									checkIn(inputNum);
-									println("Successfully checkin!");
+									//println("Successfully checkin!");
 								}
+
 								catch (Exception e) {
 									println("Please enter integer according to the list!");
 									//print search result
@@ -132,7 +128,6 @@ public class Library {
 
 							}
 						}
-
 
 					} else {
 						println("Please set who you want to serve!");
@@ -147,23 +142,18 @@ public class Library {
 				case 6: //check out
 					if (servePatron != null && !searchBook.isEmpty()) {
 						print(searchedResult());
-						println("Input the book number to checkout");
+						println("Input the book numbers to checkout, like 1,2");
 						String[] bookNum1=stringInput().split(",");
 						int inputNum1;
 						for(String num: bookNum1){
 							try {
-								inputNum1=Integer.parseInt(num);
-								ArrayList<Book> books=new ArrayList<Book>();
-								books=checkOut(inputNum1);
-								for(int i=0;i<books.size();i++){
-									println("Successfully checkout: "+books.get(i).getTitle());
-								}
 
-							}
+							inputNum1=Integer.parseInt(num);
+							checkOut(inputNum1);
+						}
 							catch (Exception e) {
 								println("Please enter integer according to the list!");
 
-								print(searchedResult());
 							}
 						}
 					} else {
@@ -172,7 +162,7 @@ public class Library {
 					break;
 				case 7:
 					close();
-					println("Successfully close!");
+					println("Closed! Good night!");
 					break;
 				default:
 					break;
@@ -228,12 +218,16 @@ public class Library {
 		String detailsToPrint="Name: ";
 		detailsToPrint += servePatron.getName() + "\n";
 
-		detailsToPrint += "Number of Checked out books: "+checkedBooks.keySet().size()+"\n";
-		for (int number: checkedBooks.keySet()) {
-			detailsToPrint += Integer.toString(number)+
-					" Title: "+checkedBooks.get(number).getTitle()+
-					", Author: "+checkedBooks.get(number).getAuthor()+
-					", Due Date: "+checkedBooks.get(number).getDueDate()+"\n";
+		
+		detailsToPrint += "Number of Checked out books: "+servePatron.getBooks().size()+"\n";
+		int i = 1;
+		for (Book book: servePatron.getBooks()) {
+			detailsToPrint += Integer.toString(i)+
+					" Title: "+book.getTitle()+
+					", Author: "+book.getAuthor()+
+					", Due Date: "+book.getDueDate()+"\n";
+			i++;
+
 		}
 
 		return detailsToPrint;
@@ -278,7 +272,6 @@ public class Library {
 				print(manual);
 			}
 		}
-
 		return command;
 	}
 
@@ -392,10 +385,18 @@ public class Library {
 		for(int i=0; i<bookNumbers.length;i++){
 			if(checkedBooks.keySet().contains(bookNumbers[i])){
 				checkInBook = checkedBooks.get(bookNumbers[i]);
-				checkInBook.checkIn();
-				checkInBooks.add(checkInBook);
-				servePatron.giveBack(checkInBook);
-				collection.add(checkInBook);
+				if (servePatron.getBooks().contains(checkInBook)) {
+					checkInBook.checkIn();
+					checkInBooks.add(checkInBook);
+					servePatron.giveBack(checkInBook);
+					collection.add(checkInBook);
+					println(checkInBook.getTitle() + " is successfully checked in!");
+				} else {
+					println(checkInBook.getTitle() +" was already checked in");
+				}
+
+			} else {
+				println("The number you input is not in the list, please serve to see the list!");
 			}
 		}
 		return checkInBooks;
@@ -447,10 +448,18 @@ public class Library {
 				checkOutBook = searchBook.get(bookNumbers[i]-1);
 				//only three books could be checked out per person
 				if(servePatron.getBooks().size()<3){
-					checkOutBooks.add(checkOutBook);
-					checkOutBook.checkOut(calendar.getDate()+7);
-					servePatron.take(checkOutBook);
-					collection.remove(checkOutBook);
+					if (servePatron.getBooks().contains(checkOutBook)) {
+						println("Sorry! "+ checkOutBook.getTitle()+ " was already checked out");
+					} else {
+						checkOutBooks.add(checkOutBook);
+						checkOutBook.checkOut(calendar.getDate()+7);
+						servePatron.take(checkOutBook);
+						collection.remove(checkOutBook);
+						println(checkOutBook.getTitle()+ " is successfully checkout!");
+					}
+
+				} else {
+					println("One customer can only check out 3 books at a time!");
 				}
 			} else {
 				println("number "+bookNumbers[i]+" is not valid");
