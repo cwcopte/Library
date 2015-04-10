@@ -317,6 +317,9 @@ public class Library {
 	ArrayList<OverdueNotice> createOverdueNotice () {
 		ArrayList<OverdueNotice> dueNotice = new ArrayList<OverdueNotice> ();
 		for (String name: patronInfo.keySet()) {
+			System.out.print(patronInfo.get(name).getBooks().get(0).getDueDate());
+			System.out.println(patronInfo.get(name));
+			System.out.println(calendar.getDate());
 			//testing
 			OverdueNotice insOverdueNotice = new OverdueNotice(patronInfo.get(name), calendar.getDate());
 			if (insOverdueNotice.isOverdue())
