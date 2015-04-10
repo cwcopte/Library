@@ -39,7 +39,7 @@ public class OverdueNotice {
 
 			bookInfo+="Title: "+book.getTitle()+"\n";
 			bookInfo+="Author: "+book.getAuthor();
-			if (this.todaysDate>book.getDueDate()){
+			if (this.todaysDate==book.getDueDate()+1){
 				//David[Title: A Bend in the River\nAuthor: V.S. Naipaul]
 				bookInfo+=" Overdue\n";
 			}
