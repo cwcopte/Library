@@ -104,7 +104,7 @@ public class Library {
 				case 3: //serve
 					println("Input the name of the customer");
 					serve(stringInput());
-					servePatron.take(contact);
+					//servePatron.take(contact);
 					print(servedPatronDetail());
 					break;
 
@@ -112,9 +112,6 @@ public class Library {
 					//use , to seperate
 					println("Input the book number to checkin");
 					String[] bookNum=stringInput().split(",");
-					//println((String)bookNum.length);
-					//println(bookNum[0]);
-					//println(bookNum[1]);
 					int inputNum;
 					for(String num: bookNum){
 						try {
@@ -123,12 +120,9 @@ public class Library {
 					}
 						catch (Exception e) {
 							println("Please enter integer according to the list!");
-							print(servedPatronDetail());
+							//print search result
 						}
-					//ArrayList<Integer> bookNum= new ArrayList<Integer>();
-					//bookNum.add( Integer.parseInt(stringInput()));
-					//bookNum
-					//bookNum.toArray()
+
 					}
 
 					break;
@@ -138,8 +132,24 @@ public class Library {
 					print(searchedResult());
 					break;
 				case 6: //check out
-					checkOut(1,2);
 					print(servedPatronDetail());
+					println("Input the book number to checkout");
+					String[] bookNum1=stringInput().split(",");
+					int inputNum1;
+					for(String num: bookNum1){
+						try {
+						inputNum1=Integer.parseInt(num);
+						checkOut(inputNum1);
+					}
+						catch (Exception e) {
+							println("Please enter integer according to the list!");
+							print(servedPatronDetail());
+						}
+					}
+					
+					
+					//checkOut(1,2);
+					//print(servedPatronDetail());
 					break;
 				case 7:
 					close();
