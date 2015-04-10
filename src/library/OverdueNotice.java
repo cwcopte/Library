@@ -70,7 +70,7 @@ public class OverdueNotice {
 	public boolean isOverdue() {
 		
 		for (Book book: patron.getBooks()){
-			if (this.todaysDate>book.getDueDate()){
+			if (this.todaysDate==book.getDueDate()+1){
 				overdue = true;
 				
 			}
