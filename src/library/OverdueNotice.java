@@ -17,14 +17,7 @@ public class OverdueNotice {
 
 	}
 	
-	public boolean overdue() {
-		if (overdue) {
-			return true;
-		} else {
-			return false;
-		}
-		
-	}
+
 	
 	/**
 	 * Returns as a String, in a nice, humanly readable format, an overdue notice. The
@@ -41,7 +34,7 @@ public class OverdueNotice {
 		ArrayList<Book> Book =patron.getBooks();
 		
 		//if book is null?
-		overdueMessage += patron.getName()+"\n";
+		overdueMessage += "Name: "+patron.getName()+"\n";
 		for (Book book: Book){
 
 			bookInfo+="Title: "+book.getTitle()+"\n";

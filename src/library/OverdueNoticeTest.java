@@ -44,11 +44,11 @@ public class OverdueNoticeTest {
 		//need something combine calendar with patron
 		//but can not do in their seperate class
 		//System.out.println(overdueNotice.toString());
-		assertTrue(overdueNotice.toString().equals("David\nTitle: A Bend in the River\nAuthor: V.S. Naipaul\n"));
+		assertTrue(overdueNotice.toString().equals("Name: David\nTitle: A Bend in the River\nAuthor: V.S. Naipaul\n"));
 		
 
 		//System.out.println(overdueNotice1.toString());
-		assertTrue(overdueNotice1.toString().equals("Emma\nTitle: Equal Rites\nAuthor: Terry Pratchett Overdue\n"));
+		assertTrue(overdueNotice1.toString().equals("Name: Emma\nTitle: Equal Rites\nAuthor: Terry Pratchett Overdue\n"));
 		
 		
 		//fail("Not yet implemented");

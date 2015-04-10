@@ -83,7 +83,7 @@ public class Library {
 			command = askUserInput();
 
 			if (command == 8) {
-				println("Oops, Bankrupted!!");
+				println("Library shut down!!");
 				quit();
 			}
 
@@ -181,7 +181,7 @@ public class Library {
 					for(OverdueNotice notice: overdueNotice){
 						println(notice.toString());
 					}
-					println("overdue notice sent to ***");
+					println("overdue notice sent!");
 				}
 				//return overdue notice
 
