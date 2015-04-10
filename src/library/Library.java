@@ -110,6 +110,8 @@ public class Library {
 
 				case 4:
 					//use , to seperate
+					//check in 
+					print(servedPatronDetail());
 					println("Input the book number to checkin");
 					String[] bookNum=stringInput().split(",");
 					int inputNum;
@@ -117,10 +119,12 @@ public class Library {
 						try {
 						inputNum=Integer.parseInt(num);
 						checkIn(inputNum);
+						println("Successfully checkin!");
 					}
 						catch (Exception e) {
 							println("Please enter integer according to the list!");
 							//print search result
+							print(servedPatronDetail());
 						}
 
 					}
@@ -132,7 +136,8 @@ public class Library {
 					print(searchedResult());
 					break;
 				case 6: //check out
-					print(servedPatronDetail());
+					
+					print(searchedResult());
 					println("Input the book number to checkout");
 					String[] bookNum1=stringInput().split(",");
 					int inputNum1;
@@ -140,10 +145,12 @@ public class Library {
 						try {
 						inputNum1=Integer.parseInt(num);
 						checkOut(inputNum1);
+						println("Successfully checkout!");
 					}
 						catch (Exception e) {
 							println("Please enter integer according to the list!");
-							print(servedPatronDetail());
+							
+							print(searchedResult());
 						}
 					}
 					
@@ -159,7 +166,7 @@ public class Library {
 				}
 			} else if (command == 1) {
 				open();
-				println("Bank is open, enjoy your day!");
+				println("Library is open, enjoy your day!");
 			} else {
 				println("Please open the bank first");
 			}
@@ -171,10 +178,13 @@ public class Library {
 	 * @return
 	 */
 	String searchedResult() {
-		String result = "Result: \n";
-		for (int i=0; i< searchBook.size(); i++){
-			result += Integer.toString(i+1) + ", Title: "+searchBook.get(i).getTitle()+", Author: "+searchBook.get(i).getAuthor() + "\n";
+
+			String result = "Result: \n";
+			for (int i=0; i< searchBook.size(); i++){
+				result += Integer.toString(i+1) + ", Title: "+searchBook.get(i).getTitle()+", Author: "+searchBook.get(i).getAuthor() + "\n";
+			
 		}
+
 		return result;
 	}
 	
@@ -388,6 +398,9 @@ public class Library {
 
 				}
 			}
+		}
+		else{
+			println("The input should be at least 4 character.");
 		}
 		return searchBook;
 	}
