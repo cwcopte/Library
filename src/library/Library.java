@@ -20,7 +20,10 @@ public class Library {
 	HashMap<Integer, Book> checkedBooks;
 	ArrayList<Book> searchBook;
 
-
+//testing variable
+    private Book contact;
+    private Book equalRites;
+    private Book sisters;
 
 	public Library() {
 		okToPrint = true;
@@ -29,6 +32,10 @@ public class Library {
 		patronInfo = new HashMap<String, Patron> ();
 		calendar = new Calendar();
 		isOpen = false;
+		//testing variables
+		contact = new Book("Contact", "Carl Sagan");
+	    equalRites = new Book("Equal Rites", "Terry Pratchett");
+	    sisters = new Book("Weird Sisters", "Terry Pratchett");
 	}
 
 	public Library(ArrayList<Book> collection) {
@@ -97,16 +104,40 @@ public class Library {
 				case 3:
 					println("Input the name of the customer");
 					serve(stringInput());
+					servePatron.take(contact);
 					print(servedPatronDetail());
 					break;
 				case 4:
+					//use , to seperate
+					println("Input the book number to checkin");
+					String[] bookNum=stringInput().split(",");
+					//println((String)bookNum.length);
+					//println(bookNum[0]);
+					//println(bookNum[1]);
+					int inputNum;
+					for(String num: bookNum){
+						try {
+						inputNum=Integer.parseInt(num);
+						checkIn(inputNum);
+					}
+						catch (Exception e) {
+							println("Please enter integer according to the list!");
+							print(servedPatronDetail());
+						}
+					//ArrayList<Integer> bookNum= new ArrayList<Integer>();
+					//bookNum.add( Integer.parseInt(stringInput()));
+					//bookNum
+					//bookNum.toArray()
 					
+
+				} 
 					break;
 				case 5:
 					println("Input the book name or author to search");
 					search(stringInput());
 					break;
 				case 6:
+
 					break;
 				case 7:
 					break;
@@ -131,6 +162,14 @@ public class Library {
 		}
 		String detailsToPrint="Name: ";
 		detailsToPrint += servePatron.toString()+"\n";
+		detailsToPrint += "Number of Checked out books: "+servePatron.getBooks().size()+"\n";
+		for (int number=0;number <servePatron.getBooks().size();number++) {
+			detailsToPrint += ("["+(number+1)+"]")+
+					" Title: "+servePatron.getBooks().get(number).getTitle()+
+					" Author: "+servePatron.getBooks().get(number).getAuthor()+
+					" Due Date "+servePatron.getBooks().get(number).getDueDate()+"\n";
+		}
+		/*
 		detailsToPrint += "Number of Checked out books: "+checkedBooks.keySet().size()+"\n";
 		for (int number: checkedBooks.keySet()) {
 			detailsToPrint += Integer.toString(number)+
@@ -138,6 +177,7 @@ public class Library {
 					" Author: "+checkedBooks.get(number).getAuthor()+
 					" Due Date "+checkedBooks.get(number).getDueDate()+"\n";
 		}
+		*/
 		return detailsToPrint;
 	}
 
