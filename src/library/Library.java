@@ -114,7 +114,6 @@ public class Library {
 							int inputNum;
 							for(String num: bookNum){
 								try {
-
 									inputNum=Integer.parseInt(num);
 									checkIn(inputNum);
 									//println("Successfully checkin!");
@@ -448,7 +447,7 @@ public class Library {
 				checkOutBook = searchBook.get(bookNumbers[i]-1);
 				//only three books could be checked out per person
 				if(servePatron.getBooks().size()<3){
-					if (servePatron.getBooks().contains(checkOutBook)) {
+					if (collection.contains(checkOutBook)) {
 						println("Sorry! "+ checkOutBook.getTitle()+ " was already checked out");
 					} else {
 						checkOutBooks.add(checkOutBook);
