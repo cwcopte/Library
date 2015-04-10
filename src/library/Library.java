@@ -94,19 +94,20 @@ public class Library {
 
 			if (isOpen) {
 				switch (command) {
-				case 1:
+				case 1: //open
 					println("Warning: Bank already opened, please close first!");
 					break;
-				case 2:
+				case 2: //issue card
 					println("Input the name of the customer");
 					issueCard(stringInput());
 					break;
-				case 3:
+				case 3: //serve
 					println("Input the name of the customer");
 					serve(stringInput());
 					servePatron.take(contact);
 					print(servedPatronDetail());
 					break;
+
 				case 4:
 					//use , to seperate
 					println("Input the book number to checkin");
@@ -128,18 +129,20 @@ public class Library {
 					//bookNum.add( Integer.parseInt(stringInput()));
 					//bookNum
 					//bookNum.toArray()
-					
+					}
 
-				} 
 					break;
-				case 5:
+				case 5: //search
 					println("Input the book name or author to search");
 					search(stringInput());
+					print(searchedResult());
 					break;
-				case 6:
-
+				case 6: //check out
+					checkOut(1,2);
+					print(servedPatronDetail());
 					break;
 				case 7:
+					close();
 					break;
 				default:
 					break;
@@ -154,7 +157,19 @@ public class Library {
 	}
 
 	/**
-	 * 
+	 * print the searched results
+	 * @return
+	 */
+	String searchedResult() {
+		String result = "Result: \n";
+		for (int i=0; i< searchBook.size(); i++){
+			result += Integer.toString(i+1) + ", Title: "+searchBook.get(i).getTitle()+", Author: "+searchBook.get(i).getAuthor() + "\n";
+		}
+		return result;
+	}
+	
+	/**
+	 * Print the detais of the patron like name, checked book and due date
 	 */
 	String servedPatronDetail() {
 		if (servePatron == null) {
@@ -174,8 +189,8 @@ public class Library {
 		for (int number: checkedBooks.keySet()) {
 			detailsToPrint += Integer.toString(number)+
 					" Title: "+checkedBooks.get(number).getTitle()+
-					" Author: "+checkedBooks.get(number).getAuthor()+
-					" Due Date "+checkedBooks.get(number).getDueDate()+"\n";
+					", Author: "+checkedBooks.get(number).getAuthor()+
+					", Due Date: "+checkedBooks.get(number).getDueDate()+"\n";
 		}
 		*/
 		return detailsToPrint;
@@ -353,7 +368,7 @@ public class Library {
 				if ((bookinfo.getAuthor().toLowerCase().indexOf(partLowercase)>=0)||
 						(bookinfo.getTitle().toLowerCase().indexOf(partLowercase)>=0)){
 					for (Book book:searchBook) {
-						if ((book.getAuthor() == bookinfo.getAuthor()) && book.getTitle() == bookinfo.getTitle()) {
+						if ((book.getAuthor().equals(bookinfo.getAuthor())) && book.getTitle().equals(bookinfo.getTitle())) {
 							haveBook = true;
 						}
 					}
