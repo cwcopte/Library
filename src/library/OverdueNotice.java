@@ -59,7 +59,10 @@ public class OverdueNotice {
 		//There are ** due items:
 		//book3 overdue:
 	}
-
+/**
+ * check if there is any book overdue
+ * @return true if there is book overdue
+ */
 	public boolean isOverdue() {
 		
 		for (Book book: patron.getBooks()){
